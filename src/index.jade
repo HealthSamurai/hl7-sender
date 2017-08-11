@@ -1,0 +1,49 @@
+div.row
+  div.col-sm-6.left-col
+    div.col-headers
+      h3.row-header Egress 
+      a.btn.btn-default(ng-click="form=!form") New Message
+
+    div.msg.submit-form(ng-show="form")
+      form.form
+        textarea.hl7-textarea.form-control(ng-model="new_msg" placeholder="HL7 Message here")
+        button.btn.btn-primary(ng-click="submit(new_msg)") Submit
+
+    div.msg(ng-repeat="m in egress")
+      div.msg-headers
+        div.col-label
+          | Instance: 
+          b {{m.instance}}
+        div.col-label
+          | Type: 
+          b {{m.messageType}}
+        div.col-label.label-status(ng-class="m.messageStatus")
+          b {{m.messageStatus}}
+
+      div.error-region(ng-if="m.messageStatus == 'Error'")
+        b Error: 
+        {{m.error}}
+      div.hr
+      div.msg-body
+        {{ m.message}}
+
+  div.col-sm-6.right-col
+    div.col-headers
+      h3.row-header Ingress
+    div.msg(ng-repeat="m in ingress")
+      div.msg-headers
+        div.col-label
+          | Instance: 
+          b {{m.instance}}
+        div.col-label
+          | Type: 
+          b {{m.messageType}}
+        div.col-label.label-status(ng-class="m.messageStatus")
+          b {{m.messageStatus}}
+
+      div.error-region(ng-if="m.messageStatus == 'Error'")
+        b Error: 
+        {{m.error}}
+      div.hr
+      div.msg-body
+        {{ m.message}}

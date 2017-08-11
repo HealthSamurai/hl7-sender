@@ -1,0 +1,44 @@
+.container
+  a(href="#/") <- Back
+  div.patinet-info
+    p
+      b{{ patient.name[0].given[0] }} {{ patient.name[0].family[0] }} 
+    p Any patient info
+
+  div.appointments
+    b Appointments
+    table.table
+      thead
+        tr
+          th Description
+          th Date
+          th Participants
+          th(style="width: 400px") Comment
+          th Status
+        tr(ng-repeat="m in appointments")
+          td {{m.description}}
+          td {{m.start }}
+          td
+            div(ng-repeat="p in m.participant") {{p.actor.display}}
+          td {{m.comment}}
+          td {{m.status}}
+
+  div.medications
+    b Medications
+    table.table
+      thead
+        tr
+          th Medicaton
+          th Dosage
+          th Status
+        tr(ng-repeat="m in medications")
+          td
+            p(ng-repeat="c in m.contained") {{c.code.coding[0].display}}
+          td
+            div(ng-repeat="d in m.dosage")
+              p {{d.text}}
+              p {{d.route.coding[0].display}}: {{d.timing.repeat.period}}{{d.timing.repeat.periodUnit}}
+              p Max: {{d.doseRange.high.value}} {{d.doseRange.high.unit}}
+              p Min: {{d.doseRange.low.value}} {{d.doseRange.low.unit}}
+          td {{m.status}}
+
